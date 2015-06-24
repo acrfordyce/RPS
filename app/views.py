@@ -33,7 +33,9 @@ def start_game(client_name):
     else:
         bot = models.RPS_Basic(None, None, None)
     game_tracker[str(game_key)] = bot
-    return flask.jsonify(**data)
+    resp =  flask.jsonify(**data)
+    resp.headers["Access-Control-Allow-Origin"] = "*"
+    return resp
 
 
 @app.route('/paper-rock-scissors/<client_name>/<game_key>/')
@@ -47,4 +49,6 @@ def shoot(client_name, game_key):
     bot.opp_prev = opp_prev
     action = bot.get_next_action()
     data = {"action": action}
-    return flask.jsonify(**data)
+    resp = flask.jsonify(**data)
+    resp.headers["Access-Control-Allow-Origin"] = "*"
+    return resp
