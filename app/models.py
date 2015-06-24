@@ -92,12 +92,8 @@ class AwesomeBot(WeightedBot):
     def get_next_action(self):
         if self.last_result:
             self.update_stats()
-            if len(self.my_history) == 1:
-                return "paper"
-            elif len(self.my_history) == 2:
-                return "scissors"
-            elif len(self.my_history) == 3:
-                return "rock"
+            if len(self.my_history) <= 3:
+                return RPS_Basic.actions[len(self.my_history)%3]
             else:
                 indices = [i for i, x in enumerate(self.my_history) if x == self.my_prev]
                 results = [self.opponent_history[i+1] for i in indices[:-1]]
